@@ -1,0 +1,15 @@
+The SOLID Principles
+- is a set of five object-oriented design principles that can help you write more maintainable, flexible, and scalable code based on well-designed, cleanly structured classes.
+
+The five SOLID priciples are:
+- Single Responsibility Principle (SRP)
+  A class should have a single responsibility or a single job.
+- Open/Closed Principle (OCP)
+  A class should be open for extension but closed for modification.
+- Liskov Substitution Principle (LSP)
+  Derived classes should be substitute for their base classes.
+- Interface Segregation Principle (ISP)
+  A client should not be forced to depend on methods it does not use.
+- Dependency Inversion Principle (DIP)
+  High-level modules should not depend on low-level modules. Both should depend on abstractions.
+  
