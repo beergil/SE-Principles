@@ -17,7 +17,12 @@ class Order:
             total += self.quantities[i] * self.prices[i]
        return total
 
-class SMSAuth:
+class Authorizer(ABC):
+    @abstractmethod
+    def is_authorized(self) -> bool:
+        pass
+
+class SMSAuth(Authorizer):
 
     authorized = False
 
@@ -28,6 +33,15 @@ class SMSAuth:
     def is_authorized(self) -> bool:
         return self.authorized
 
+class NotARobot(Authorizer):
+    authorized = False
+
+    def not_a_robot(self):
+        print("Are you a robot? Naaaaa...")
+        self.authorized = True
+
+    def is_authorized(self) -> bool:
+        return self.authorized
 
 class PaymentProcessor(ABC):
 
@@ -38,7 +52,7 @@ class PaymentProcessor(ABC):
 
 class DebitPaymentProcessor(PaymentProcessor):
 
-    def __init__(self, security_code, authorizer: SMSAuth):
+    def __init__(self, security_code, authorizer: Authorizer):
         self.authorizer = authorizer
         self.security_code = security_code
 
@@ -61,7 +75,7 @@ class CreditPaymentProcessor(PaymentProcessor):
 
 class PaypalPaymentProcessor(PaymentProcessor):
 
-    def __init__(self, email_address, authorizer: SMSAuth):
+    def __init__(self, email_address, authorizer: Authorizer):
         self.authorizer = authorizer
         self.email_address = email_address
 
@@ -78,7 +92,7 @@ order.add_item("SSD", 1, 150)
 order.add_item("USB cable", 2, 5)
 
 print(order.total_price())
-authorizer = SMSAuth()
+authorizer = NotARobot()
 processor = DebitPaymentProcessor("2349875", authorizer)
-authorizer.verify_code(465839)
+authorizer.not_a_robot()
 processor.pay(order)
